@@ -7,8 +7,11 @@ fi
 
 if [[ $( ps -ax -o stat,comm | grep 'java' | awk '{ print $1 }') =~ ^S.*$ ]] ; then
   # save world
+  logAutopauseAction "Saving world"
   rcon-cli save-all flush >/dev/null
   rcon-cli sync >/dev/null
+  # commit any cached data to disk
+  sync
 
   # wait until mc-monitor is no longer connected to the server
   while :
